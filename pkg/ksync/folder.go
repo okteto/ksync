@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	canonicalPath "path"
+
 	// "path/filepath"
 	"time"
 
@@ -89,7 +90,8 @@ func (f *Folder) initErrorHandler() {
 		log.WithFields(log.Fields{
 			"node": f.RemoteContainer.NodeName,
 			"pod":  f.RemoteContainer.PodName,
-		}).Debug("lost connection to remote")
+		}).Warn("lost connection to remote")
+		SignalLoss <- true
 	})
 }
 
